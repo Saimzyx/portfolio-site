@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+@theme {
+  --color-paper: #ededed;
+  --color-ink: #0f3c65;
+  --color-cream: #fff2bd;
+  --color-sky: #9acbf0;
+  --color-slate: #9badba;
+  --color-charcoal: #22241e;
+  --font-sans: "Poppins", sans-serif;
+  --font-script: "Bukhari Script", cursive;
+  --font-display: "Ahsing", serif;
+}
+
+:root { color-scheme: light; }
+html { background: #ededed; scroll-behavior: smooth; scrollbar-gutter: stable; }
+body { margin: 0; background: #ededed; color: #12211b; font-family: "Poppins", sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+a { text-decoration: none; }
+::selection { color: #0f3c65; background: #fff2bd; }
+:focus-visible { outline: 3px solid #0f3c65; outline-offset: 5px; }
+section { scroll-margin-top: 16px; }
+
+.skip-link { position: fixed; top: 16px; left: 16px; z-index: 100; padding: 12px 18px; color: #ededed; background: #0f3c65; transform: translateY(-150%); }
+.skip-link:focus { transform: translateY(0); }
+.design-canvas { position: relative; width: 100%; container-type: inline-size; isolation: isolate; overflow: clip; }
+.design-group { overflow: visible; }
+.design-image, .artwork-button { overflow: hidden; }
+.design-image { pointer-events: none; }
+.design-shape { overflow: visible; pointer-events: none; }
+.design-connector { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.design-text { margin: 0; padding: 0; font-synthesis: none; }
+.design-text-line { display: block; white-space: pre; }
+.design-text-content { display: block; }
+.design-link { cursor: pointer; }
+.design-link:hover { text-decoration: underline; text-underline-offset: .15em; }
+.artwork-button { display: block; border: 0; padding: 0; transition: filter 180ms ease; }
+.artwork-button:hover { filter: brightness(1.025); }
+
+.artwork-dialog { width: 100%; max-width: 100%; height: 100%; max-height: 100%; border: 0; margin: 0; padding: 24px; background: rgba(5, 12, 30, .94); color: #ededed; }
+.artwork-dialog::backdrop { background: rgba(5, 12, 30, .9); }
+.artwork-dialog-content { max-width: 1400px; margin: 0 auto; padding-top: max(0px, calc((100svh - 84svh) / 2)); }
+.viewer-close { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid #9acbf0; color: #ededed; background: transparent; }
+.viewer-close:hover { background: #0f3c65; }
+.artwork-dialog :focus-visible { outline-color: #fff2bd; }
+
+.selection-frame { position: relative; border: 2px solid currentColor; }
+.selection-frame::before, .selection-frame::after, .selection-frame > .frame-handles::before, .selection-frame > .frame-handles::after { content: ""; position: absolute; z-index: 2; width: 7px; height: 7px; background: currentColor; }
+.selection-frame::before { top: -4px; left: -4px; }
+.selection-frame::after { top: -4px; right: -4px; }
+.selection-frame > .frame-handles::before { bottom: -4px; left: -4px; }
+.selection-frame > .frame-handles::after { bottom: -4px; right: -4px; }
+
+.mobile-intro { height: min(780px, 95svh); }
+.mobile-paper-top { top: -100px; left: -130px; width: 430px; height: 418px; opacity: .97; }
+.mobile-paper-bottom { right: -250px; bottom: -110px; width: 430px; height: 418px; transform: rotate(180deg); opacity: .97; }
+.mobile-portfolio-word { top: 40%; font-size: clamp(60px, 17.5vw, 108px); letter-spacing: -.04em; }
+.mobile-portrait-letter { width: 1.6em; height: 1em; }
+.mobile-portrait-letter > span { left: 50%; transform: translateX(-50%); }
+.mobile-intro-portrait { left: min(-31%, calc(31% - 245px)); width: max(125%, 468px); height: 90%; }
+.project-rule { height: 1px; position: relative; background: #22241e; }
+.project-rule::before, .project-rule::after { position: absolute; content: ""; top: -2px; width: 5px; height: 5px; border: 1px solid #22241e; background: #ededed; }
+.project-rule::before { left: 0; }
+.project-rule::after { right: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

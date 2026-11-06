@@ -1,0 +1,81 @@
+/* Original fonts used in the supplied Canva portfolio. */
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins-700-BOLD.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bukhari Script";
+  src: url("/fonts/bukhari-script-400-REGULAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins-400-REGULAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins-500-MEDIUM_ITALICS.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ahsing";
+  src: url("/fonts/ahsing-400-REGULAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins-600-SEMI_BOLD.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins-500-MEDIUM.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Caladea";
+  src: url("/fonts/caladea-400-REGULAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Anaktoria";
+  src: url("/fonts/anaktoria-400-REGULAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kenao Sans Serif";
+  src: url("/fonts/kenao-sans-serif-400-REGULAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
