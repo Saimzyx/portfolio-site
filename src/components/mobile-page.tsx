@@ -4,13 +4,14 @@ import { ArtworkImage } from "@/components/artwork-viewer";
 import { DesignCanvas, DesignFragment } from "@/components/design-canvas";
 import { artworkLabels, assets, contact, designPages, experience } from "@/lib/portfolio";
 import type { DesignNode } from "@/lib/design-types";
+import { chapterViewports } from "@/lib/section-flow";
 
 function Frame({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={`selection-frame ${className}`}><span className="frame-handles" aria-hidden="true" />{children}</div>;
 }
 
 function Decoration({ asset, className = "", position = "relative" }: { asset: keyof typeof assets; className?: string; position?: "relative" | "absolute" }) {
-  return <div style={{position}} className={className} aria-hidden="true"><Image src={assets[asset].src} alt="" fill unoptimized sizes="100vw" className="object-contain" /></div>;
+  return <div style={{position}} className={className} data-decoration={asset} aria-hidden="true"><Image src={assets[asset].src} alt="" fill unoptimized sizes="100vw" className="object-contain" /></div>;
 }
 
 function Art({ asset, className = "", contain = false }: { asset: keyof typeof assets; className?: string; contain?: boolean }) {
@@ -53,10 +54,10 @@ function MobileIntro() {
 
 function MobileAbout() {
   return (
-    <div className="relative overflow-hidden px-7 pt-10 pb-14">
+    <div className="mobile-about relative overflow-hidden px-7 pt-10 pb-14">
       <div className="relative mx-auto mb-10 h-[350px] max-w-[330px]">
         <div className="absolute inset-x-5 bottom-5 aspect-square rounded-full bg-ink" />
-        <div className="absolute inset-0 z-10"><Image src={assets.MAHXCsGwdCI.src} alt="Syed Saim Hussain" fill unoptimized sizes="330px" className="object-contain object-bottom" /></div>
+        <div className="mobile-about-portrait absolute inset-0 z-10"><Image src={assets.MAHXCsGwdCI.src} alt="Syed Saim Hussain" fill unoptimized sizes="330px" className="object-contain object-bottom" /></div>
         <Decoration asset="MAFx7ZjanGQ" position="absolute" className="-right-16 -bottom-5 -left-16 h-24 opacity-20" />
       </div>
       <p className="text-[17px] leading-[1.6]">Based in Pakistan, I <span className="inline-block rotate-[4deg] font-script text-[23px] text-ink">design</span> brand identities with an emphasis on creating social media content.</p>
@@ -68,7 +69,7 @@ function MobileAbout() {
 function MobileExperience({ continued = false }: { continued?: boolean }) {
   const items = continued ? experience.slice(2) : experience.slice(0, 2);
   return (
-    <div className={`relative overflow-hidden px-7 ${continued ? "pt-4 pb-12" : "pt-14 pb-4"}`}>
+    <div className={`mobile-experience relative overflow-hidden px-7 ${continued ? "mobile-experience-continued pt-4 pb-12" : "pt-14 pb-4"}`}>
       <Decoration asset={continued ? "MAGGgcqE8zA" : "MAE4mE--hTA"} position="absolute" className="pointer-events-none inset-0 h-full w-full opacity-15" />
       {!continued && <>
         <div className="relative mb-8 flex items-center justify-between">
@@ -79,7 +80,7 @@ function MobileExperience({ continued = false }: { continued?: boolean }) {
           {(["MAEsHc0xokM", "MAHXEAXNEGU", "MAHFebG9brk", "MAHXELrBXjY"] as const).map((asset) => <Decoration key={asset} asset={asset} className="h-12 w-12" />)}
         </div>
       </>}
-      <div className="relative ml-2 border-l-2 border-ink pl-7">
+      <div className="mobile-timeline relative ml-2 border-l-2 border-ink pl-7">
         {items.map((item) => <article key={item.company} className="relative pb-10 last:pb-0">
           <span className="absolute top-1 -left-[33px] h-2 w-2 bg-ink" aria-hidden="true" />
           <p className="mb-2 text-xs font-medium text-[#474747]">{item.date}</p>
@@ -91,8 +92,8 @@ function MobileExperience({ continued = false }: { continued?: boolean }) {
       {continued && <div className="relative mt-12 max-w-[290px] overflow-hidden rounded-lg border-2 border-[#474747]">
         <p className="bg-cream px-4 py-3 text-sm font-semibold text-[#474747]">Lets Create Something Together!</p>
         <div className="space-y-3 border-t-2 border-[#474747] bg-slate px-4 py-4 text-[12px] text-[#243f56]">
-          <a className="flex items-center gap-2" href={contact.phoneHref}><Decoration asset="MAHXohD5Szs" className="h-5 w-5 shrink-0" />{contact.phone}</a>
-          <a className="flex items-center gap-2" href={`mailto:${contact.email}`}><Decoration asset="MAHXoh4zrho" className="h-5 w-5 shrink-0" />{contact.email}</a>
+          <a className="flex items-center gap-2" href={contact.phoneHref} target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp (opens in a new tab)"><Decoration asset="MAHXohD5Szs" className="h-5 w-5 shrink-0" />{contact.phone}</a>
+          <a className="flex items-center gap-2" href={contact.emailHref} target="_blank" rel="noopener noreferrer" title="Email me in Gmail (opens in a new tab)"><Decoration asset="MAHXoh4zrho" className="h-5 w-5 shrink-0" />{contact.email}</a>
         </div>
       </div>}
     </div>
@@ -207,10 +208,10 @@ function MobileContact() {
       <Decoration asset="MAGGgcqE8zA" position="absolute" className="-top-16 -left-24 h-[450px] w-[450px] rotate-180 opacity-25" />
       <Frame className="relative border-dashed p-4"><a href="#hero" className="text-[14px] font-medium">Thank you for scrolling all the way to here!</a></Frame>
       <svg className="relative mx-auto my-4 h-28 w-32" viewBox="0 0 128 112" fill="none" aria-hidden="true"><path d="M75 0v12q0 14-14 14H37q-14 0-14 14t14 14h47q14 0 14 14T84 82H64q-14 0-14 14v12m-5-6 5 6 5-6" stroke="#474747" strokeWidth="2" strokeDasharray="6 3" strokeLinecap="round" /></svg>
-      <Frame className="relative mx-auto mb-12 w-fit border-dashed px-3 py-3"><a href={`mailto:${contact.email}`} className="text-[27px] font-semibold tracking-tight">Let’s Work Together!</a></Frame>
+      <Frame className="relative mx-auto mb-12 w-fit border-dashed px-3 py-3"><a href={contact.emailHref} target="_blank" rel="noopener noreferrer" title="Email me in Gmail (opens in a new tab)" className="text-[27px] font-semibold tracking-tight">Let’s Work Together!</a></Frame>
       <div className="relative flex flex-col items-start gap-6 text-[13px] text-[#474747]">
-        <a href={contact.phoneHref} className="selection-frame ml-auto flex items-center gap-3 border-dashed bg-slate px-4 py-3"><span className="frame-handles" aria-hidden="true" /><Decoration asset="MAHXohD5Szs" className="h-6 w-6 shrink-0" />{contact.phone}</a>
-        <a href={`mailto:${contact.email}`} className="selection-frame flex items-center gap-3 border-dashed bg-slate px-4 py-3"><span className="frame-handles" aria-hidden="true" />{contact.email}<Decoration asset="MAHXoh4zrho" className="h-6 w-6 shrink-0" /></a>
+        <a href={contact.phoneHref} target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp (opens in a new tab)" className="selection-frame ml-auto flex items-center gap-3 border-dashed bg-slate px-4 py-3"><span className="frame-handles" aria-hidden="true" /><Decoration asset="MAHXohD5Szs" className="h-6 w-6 shrink-0" />{contact.phone}</a>
+        <a href={contact.emailHref} target="_blank" rel="noopener noreferrer" title="Email me in Gmail (opens in a new tab)" className="selection-frame flex items-center gap-3 border-dashed bg-slate px-4 py-3"><span className="frame-handles" aria-hidden="true" />{contact.email}<Decoration asset="MAHXoh4zrho" className="h-6 w-6 shrink-0" /></a>
       </div>
     </footer>
   );
@@ -223,7 +224,7 @@ export function MobilePage({ number }: { number: number }) {
     case 3: return <MobileExperience />;
     case 4: return <MobileExperience continued />;
     case 5: return <MobileContents />;
-    case 6: case 10: case 13: return <DesignCanvas page={designPages[number - 1]} />;
+    case 6: case 10: case 13: return <DesignCanvas page={designPages[number - 1]} viewport={chapterViewports[number]} />;
     case 7: return <VerlioProject />;
     case 8: return <LuprixProject />;
     case 9: return <TwillSocialProject />;

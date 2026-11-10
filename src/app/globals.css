@@ -13,7 +13,7 @@
   --font-display: "Ahsing", serif;
 }
 
-:root { color-scheme: light; }
+:root { color-scheme: light; --portfolio-nav-height: 76px; }
 html { background: #ededed; scroll-behavior: smooth; scrollbar-gutter: stable; }
 body { margin: 0; background: #ededed; color: #12211b; font-family: "Poppins", sans-serif; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -21,7 +21,43 @@ button { cursor: pointer; }
 a { text-decoration: none; }
 ::selection { color: #0f3c65; background: #fff2bd; }
 :focus-visible { outline: 3px solid #0f3c65; outline-offset: 5px; }
-section { scroll-margin-top: 16px; }
+section { scroll-margin-top: calc(var(--portfolio-nav-height) + 16px); }
+.portfolio-section:focus { outline: none; }
+
+/* Keep one proportional canvas width across the desktop portfolio. */
+.portfolio-main { margin-inline: auto; }
+@media (min-width: 768px) {
+  .portfolio-main { width: min(85%, 1400px); }
+}
+
+/* Blend backgrounds at section edges without masking text or portfolio artwork. */
+.design-background {
+  --background-fade-top: 0%;
+  --background-fade-bottom: 100%;
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--background-fade-top), #000 var(--background-fade-bottom), transparent), linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
+.design-background[data-background-asset="MAFx7ZjanGQ"] { --background-fade-bottom: 72%; }
+.design-background[data-background-asset="MAFx7ZjanGQ"] .design-image { mask-image: linear-gradient(to bottom, transparent, #000 12%); }
+.design-background[data-background-asset="MAE4mE--hTA"] { --background-fade-top: 12%; --background-fade-bottom: 80%; }
+.design-background[data-background-asset="MAGGgcqE8zA"] { --background-fade-top: 14%; --background-fade-bottom: 84%; }
+.design-background[data-background-asset="MAHXEQkX42o"] { --background-fade-top: 6%; }
+#experience .desktop-page .design-canvas { overflow: visible; }
+[data-design-page="13"] > .design-connector {
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent), linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
+
+/* The introduction and About share the same uninterrupted paper. */
+#hero { position: relative; z-index: 1; overflow-x: clip; }
+#hero .design-image[data-asset="MAHXCsGwdCI"] { mask-image: linear-gradient(to bottom, #000 80%, transparent 98%); }
+#hero .design-background[data-background-asset="MAHXCncnPwY"] ~ .design-background[data-background-asset="MAHXCncnPwY"] { --background-fade-bottom: 80%; }
+#about .design-image[data-asset="MAHXCncnPwY"] { display: none; }
+#about .design-image[data-asset="MAHXCsGwdCI"] { mask-image: linear-gradient(to bottom, #000 82%, transparent 99%); }
 
 .skip-link { position: fixed; top: 16px; left: 16px; z-index: 100; padding: 12px 18px; color: #ededed; background: #0f3c65; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
@@ -59,11 +95,21 @@ section { scroll-margin-top: 16px; }
 .mobile-portfolio-word { top: 40%; font-size: clamp(60px, 17.5vw, 108px); letter-spacing: -.04em; }
 .mobile-portrait-letter { width: 1.6em; height: 1em; }
 .mobile-portrait-letter > span { left: 50%; transform: translateX(-50%); }
-.mobile-intro-portrait { left: min(-31%, calc(31% - 245px)); width: max(125%, 468px); height: 90%; }
+.mobile-intro-portrait { left: min(-31%, calc(31% - 245px)); width: max(125%, 468px); height: 90%; mask-image: linear-gradient(to bottom, #000 81%, transparent 99%); }
+.mobile-paper-bottom { mask-image: linear-gradient(to top, #000 35%, transparent 74%); }
+.mobile-about-portrait { mask-image: linear-gradient(to bottom, #000 84%, transparent 100%); }
 .project-rule { height: 1px; position: relative; background: #22241e; }
 .project-rule::before, .project-rule::after { position: absolute; content: ""; top: -2px; width: 5px; height: 5px; border: 1px solid #22241e; background: #ededed; }
 .project-rule::before { left: 0; }
 .project-rule::after { right: 0; }
+
+@media (max-width: 767px) {
+  :root { --portfolio-nav-height: 64px; }
+  .mobile-about { margin-top: -24px; padding-top: 0; }
+  .mobile-page [data-decoration="MAE4mE--hTA"], .mobile-page [data-decoration="MAGGgcqE8zA"] { mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 82%, transparent); }
+  .mobile-experience { overflow: visible; }
+  .mobile-experience:not(.mobile-experience-continued) .mobile-timeline::after { position: absolute; top: 100%; left: -2px; width: 2px; height: 32px; background: var(--color-ink); content: ""; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -4,10 +4,12 @@ import type { DesignPage } from "@/lib/design-types";
 
 export const designPages = originalPages as DesignPage[];
 export const assets = originalAssets;
+const email = "sh3778257@gmail.com";
 export const contact = {
-  email: "sh3778257@gmail.com",
+  email,
+  emailHref: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`,
   phone: "+92 3083132363",
-  phoneHref: "tel:+923083132363",
+  phoneHref: "https://wa.me/923083132363",
 };
 
 export const pageDetails = [
