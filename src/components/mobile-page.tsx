@@ -89,9 +89,9 @@ function MobileExperience({ continued = false }: { continued?: boolean }) {
           <p className="mt-2 text-[13px] leading-[1.6]">{item.description}</p>
         </article>)}
       </div>
-      {continued && <div className="relative mt-12 max-w-[290px] overflow-hidden rounded-lg border-2 border-[#474747]">
-        <p className="bg-cream px-4 py-3 text-sm font-semibold text-[#474747]">Lets Create Something Together!</p>
-        <div className="space-y-3 border-t-2 border-[#474747] bg-slate px-4 py-4 text-[12px] text-[#243f56]">
+      {continued && <div className="experience-contact-card relative mx-auto mt-12 w-full max-w-[340px] overflow-hidden rounded-lg border-2 border-[#474747]">
+        <p className="m-0 flex min-h-12 items-center bg-cream px-4 py-3 text-sm font-semibold text-[#474747]">Lets Create Something Together!</p>
+        <div className="grid gap-3 border-t-2 border-[#474747] bg-slate px-4 py-4 text-[12px] text-[#243f56]">
           <a className="flex items-center gap-2" href={contact.phoneHref} target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp (opens in a new tab)"><Decoration asset="MAHXohD5Szs" className="h-5 w-5 shrink-0" />{contact.phone}</a>
           <a className="flex items-center gap-2" href={contact.emailHref} target="_blank" rel="noopener noreferrer" title="Email me in Gmail (opens in a new tab)"><Decoration asset="MAHXoh4zrho" className="h-5 w-5 shrink-0" />{contact.email}</a>
         </div>

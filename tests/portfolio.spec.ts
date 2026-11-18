@@ -104,6 +104,40 @@ test("opens Gmail and WhatsApp from all contact links", async ({ page, context }
   await expect(page).toHaveURL(/#hero$/);
 });
 
+test("fills and aligns the experience contact card", async ({ page, isMobile }) => {
+  await page.goto("/#experience-continued");
+
+  if (isMobile) {
+    const card = page.locator(".experience-contact-card");
+    const section = page.locator("#experience-continued .mobile-page > div");
+    await expect(card).toBeVisible();
+    const layout = await Promise.all([card.boundingBox(), section.boundingBox()]);
+    expect(layout[0]!.width).toBe(layout[1]!.width - 56);
+    expect(layout[0]!.x).toBe(layout[1]!.x + 28);
+    const panels = card.locator(":scope > p, :scope > div");
+    await expect(panels).toHaveCount(2);
+    for (const panel of await panels.all()) {
+      const panelBox = await panel.boundingBox();
+      expect(panelBox!.x).toBe(layout[0]!.x + 2);
+      expect(panelBox!.width).toBe(layout[0]!.width - 4);
+    }
+    return;
+  }
+
+  const card = page.locator('[data-design-id="LBd24yKHfvTWh1Y0"]');
+  const headerFill = card.locator('[data-design-id="LBVRsxxY7TRpywgQ"]');
+  const bodyFill = card.locator('[data-design-id="LB2krQmPzySsZhW5"]');
+  const headerOutline = card.locator('[data-design-id="LBmFSNX1cxyQDXk1"]');
+  const bodyOutline = card.locator('[data-design-id="LBgZXHbWm3jjlzVL"]');
+
+  for (const [fill, outline] of [[headerFill, headerOutline], [bodyFill, bodyOutline]]) {
+    const [fillBox, outlineBox] = await Promise.all([fill.boundingBox(), outline.boundingBox()]);
+    expect(fillBox!.x).toBe(outlineBox!.x);
+    expect(fillBox!.width).toBe(outlineBox!.width);
+    expect(fillBox!.height).toBe(outlineBox!.height);
+  }
+});
+
 test("opens artwork and restores keyboard focus when the viewer closes", async ({ page }) => {
   await page.goto("/#verlio");
   const artwork = page.getByRole("button", { name: "View Verlio — Our Mission social media post", exact: true });

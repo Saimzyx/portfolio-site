@@ -12,12 +12,18 @@ const percent = (value: number, total: number) => `${(value / total) * 100}%`;
 const cqw = (value: number, width: number) => `${(value / width) * 100}cqw`;
 
 function placement(node: DesignNode, context: Context): CSSProperties {
+  const contactFill = node.id === "LBVRsxxY7TRpywgQ"
+    ? { x: 0, y: 0, width: 368.763996, height: 85.209313 }
+    : node.id === "LB2krQmPzySsZhW5"
+      ? { x: 0, y: 81.429785, width: 368.763996, height: 135.849034 }
+      : node;
+
   return {
     position: "absolute",
-    left: percent(node.x, context.width),
-    top: percent(node.y - context.offsetY, context.height),
-    width: percent(node.width, context.width),
-    height: percent(node.height, context.height),
+    left: percent(contactFill.x, context.width),
+    top: percent(contactFill.y - context.offsetY, context.height),
+    width: percent(contactFill.width, context.width),
+    height: percent(contactFill.height, context.height),
     ...(node.rotation ? { transform: `rotate(${node.rotation}deg)` } : {}),
     ...(node.opacity !== undefined ? { opacity: node.opacity } : {}),
   };
@@ -49,7 +55,7 @@ function Connector({ node: original, context }: { node: LineNode; context: Conte
 
 function Shape({ node, context, style }: { node: ShapeNode; context: Context; style: CSSProperties }) {
   return (
-    <svg style={style} className="design-shape" viewBox={`0 0 ${node.viewWidth} ${node.viewHeight}`} preserveAspectRatio="none" aria-hidden="true">
+    <svg style={style} className="design-shape" data-design-id={node.id} viewBox={`0 0 ${node.viewWidth} ${node.viewHeight}`} preserveAspectRatio="none" aria-hidden="true">
       {node.paths.map((part, index) => {
         const strokeStyle: CSSProperties = part.strokeWidth ? {
           strokeWidth: cqw(part.strokeWidth * context.scaleY, context.pageWidth),
