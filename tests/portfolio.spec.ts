@@ -71,6 +71,41 @@ test("supports keyboard navigation and dismisses the phone menu", async ({ page,
   await expect(navigation).toBeHidden();
 });
 
+test("aligns chapter lettering and the open menu icon at Pixel 4 width", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "This checks the phone composition.");
+  await page.setViewportSize({ width: 353, height: 745 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const pairs = [
+    ["logos", "LBtcp0mKCgsXC4t4", "LBw67Nlq303ncXrl"],
+    ["logos", "LBQkcrFll26bMMlS", "LB44SkW3bY3nSbkB"],
+    ["prototyping", "LBrKfCJLmJS9B2Vz", "LB6dVqJQB3FJVkNX"],
+  ] as const;
+
+  for (const [sectionId, textId, boxId] of pairs) {
+    const mobile = page.locator(`#${sectionId} .mobile-page`);
+    const [textBox, frameBox] = await Promise.all([
+      mobile.locator(`[data-design-id="${textId}"]`).boundingBox(),
+      mobile.locator(`[data-design-id="${boxId}"]`).boundingBox(),
+    ]);
+    const textCenter = { x: textBox!.x + textBox!.width / 2, y: textBox!.y + textBox!.height / 2 };
+    const frameCenter = { x: frameBox!.x + frameBox!.width / 2, y: frameBox!.y + frameBox!.height / 2 };
+    expect(Math.abs(textCenter.x - frameCenter.x)).toBeLessThan(0.6);
+    expect(Math.abs(textCenter.y - frameCenter.y)).toBeLessThan(0.6);
+  }
+
+  const toggle = page.locator('button[aria-controls="portfolio-navigation"]');
+  await toggle.click();
+  const bars = toggle.locator("[data-menu-bar]");
+  await expect(bars).toHaveCount(2);
+  const [first, second] = await Promise.all([bars.nth(0).boundingBox(), bars.nth(1).boundingBox()]);
+  expect(Math.abs(first!.x - second!.x)).toBeLessThan(0.1);
+  expect(Math.abs(first!.y - second!.y)).toBeLessThan(0.1);
+  expect(Math.abs(first!.width - second!.width)).toBeLessThan(0.1);
+  expect(Math.abs(first!.height - second!.height)).toBeLessThan(0.1);
+});
+
 test("opens Gmail and WhatsApp from all contact links", async ({ page, context }) => {
   // Verify the destination in a new tab without contacting either service.
   await context.route((url) => ["mail.google.com", "wa.me"].includes(url.hostname), (route) => route.fulfill({ contentType: "text/html", body: "Contact destination" }));

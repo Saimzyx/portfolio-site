@@ -80,7 +80,7 @@ export function PortfolioNav() {
           onClick={() => setOpen(!open)}
         >
           {open ? "Close" : "Menu"}
-          <span className={styles.menuIcon} aria-hidden="true"><span /><span /></span>
+          <span className={styles.menuIcon} aria-hidden="true"><span data-menu-bar="true" /><span data-menu-bar="true" /></span>
         </button>
         <nav id="portfolio-navigation" aria-label="Main navigation" className={styles.navigation} data-open={open}>
           {links.map(({ id, label }, index) => (
